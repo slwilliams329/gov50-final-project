@@ -8,7 +8,7 @@ output:
 ---
 
 
-```{r}
+```{r setup, echo = FALSE}
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
@@ -17,7 +17,8 @@ library(readxl)
 data <- read_excel("~/Desktop/judicial_review_of_congress_database_1789-2022 (2) (1).xlsx") 
 data
 ```
-```{r}
+
+```{r setup, echo = FALSE}
 
 preCaro <- data |>
   filter(DECADE <= 1930) |>
@@ -45,7 +46,8 @@ preViz <- preCaro |>
 preViz
          
 ```
-```{r}
+
+```{r setup, echo = FALSE}
 postCaro <- data |>
   filter(DECADE >= 1940) |>
   group_by(AREA1) |>
