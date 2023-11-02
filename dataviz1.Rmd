@@ -1,16 +1,13 @@
 ---
-title: "Gov 50 Final Project"
+title: "FirstViz"
 author: "Samantha Williams"
-description: "My final project"
-output:
-  distill::distill_article:
-    self_contained: false
+date: "2023-11-02"
+output: pdf_document
 ---
 
-
-
-## Project thoughts
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ```{r}
 library(tidyverse)
@@ -78,3 +75,5 @@ postViz <- postCaro |>
 
 postViz
 ```
+
+
