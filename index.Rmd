@@ -22,7 +22,7 @@ data
 ```
 
 
-```{r,include = FALSE}
+```{r}
 
 preCaro <- data |>
   filter(DECADE <= 1930) |>
@@ -54,7 +54,7 @@ PreCarolene
 ```
 
 
-```{r, include = FALSE}
+```{r}
 postCaro <- data |>
   filter(DECADE >= 1940) |>
   group_by(AREA1) |>
