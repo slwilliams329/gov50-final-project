@@ -8,10 +8,6 @@ output:
 ---
 
 
-
-## Project thoughts
-
-
 ```{r}
 library(tidyverse)
 library(ggplot2)
