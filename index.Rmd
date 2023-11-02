@@ -13,11 +13,11 @@ library(tidyverse)
 library(ggplot2)
 library(dplyr)
 library(readxl) 
-data <- read_excel("~/Desktop/judicial_review_of_congress_database_1789-2022 (2) (1).xlsx") 
 
 ```
 
 ```{r}
+data <- read_excel("~/Desktop/judicial_review_of_congress_database_1789-2022 (2) (1).xlsx") 
 data
 ```
 
