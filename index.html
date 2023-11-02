@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["dataviz1.pdf","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["dataviz1.pdf","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1519,66 +1519,42 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-article">
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>preCaro</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>DECADE</span> <span class='op'>&lt;=</span> <span class='fl'>1930</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>AREA1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='op'>(</span><span class='va'>n</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>preViz</span> <span class='op'>&lt;-</span> <span class='va'>preCaro</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    PrimaryIssue <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Due Process"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"Substantive Rights"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>~</span> <span class='st'>"Equality"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>"Economic"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Federalism"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Separation of Powers"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>PrimaryIssue</span>, y<span class='op'>=</span><span class='va'>prop</span>, fill <span class='op'>=</span> <span class='va'>PrimaryIssue</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Primary Constitutional Issue"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Proportion of Cases Presented to Supreme Court"</span>,</span>
-<span>    title <span class='op'>=</span> <span class='st'>"Cases Pre-Carolene (1760s-1930s)"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>preViz</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>data</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
+<pre><code># A tibble: 1,323 × 27
+   CASE          CITATION DATE   YEAR DECADE DECISION DECISION2 EFFECT
+   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; 
+ 1 United State… *54 U.S… 2/17…  1794   1790        2         1 struc…
+ 2 Penhallow v.… 003 U.S… 2/24…  1795   1790        0         0 upheld
+ 3 Hylton v. Un… 003 U.S… 3/8/…  1796   1790        0         0 upheld
+ 4 United State… 003 U.S… 8/11…  1796   1790        0         0 upheld
+ 5 Mossman v. H… 004 U.S… 8/11…  1800   1800        1         1 struc…
+ 6 Marbury v. M… 005 U.S… 2/24…  1803   1800        2         1 struc…
+ 7 Stuart v. La… 005 U.S… 3/2/…  1803   1800        0         0 upheld
+ 8 United State… 006 U.S… 2/21…  1805   1800        0         0 upheld
+ 9 Ex Parte Bol… 008 U.S… 2/20…  1807   1800        0         0 upheld
+10 United State… 008 U.S… 2/28…  1807   1800        2         1 struc…
+# ℹ 1,313 more rows
+# ℹ 19 more variables: `STAT NAME` &lt;chr&gt;, `STAT CITE` &lt;chr&gt;,
+#   `PL #` &lt;chr&gt;, `S-DATE` &lt;chr&gt;, `TIME TO DECISION` &lt;dbl&gt;,
+#   CONGRESS &lt;dbl&gt;, AREA1 &lt;chr&gt;, AREA2 &lt;dbl&gt;, LNDMRK &lt;dbl&gt;,
+#   LNDDTL &lt;dbl&gt;, `ATT GEN` &lt;dbl&gt;, CERT &lt;dbl&gt;, REVERSD &lt;dbl&gt;,
+#   CRS &lt;dbl&gt;, `GVT PRTY` &lt;dbl&gt;, DISSENT &lt;dbl&gt;, `H-CT` &lt;dbl&gt;,
+#   caseId.SCDB &lt;chr&gt;, `JRC caseID` &lt;chr&gt;</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>postCaro</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>DECADE</span> <span class='op'>&gt;=</span> <span class='fl'>1940</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>AREA1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='op'>(</span><span class='va'>n</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>Issues</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Due Process"</span>,<span class='st'>"Substantive Rights"</span>,<span class='st'>"Equality"</span>,<span class='st'>"Economic"</span>,<span class='st'>"Federalism"</span>,<span class='st'>"Separation of Powers"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>postViz</span> <span class='op'>&lt;-</span> <span class='va'>postCaro</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    PrimaryIssue <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Due Process"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"Substantive Rights"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>~</span> <span class='st'>"Equality"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>"Economic"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Federalism"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Separation of Powers"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>PrimaryIssue</span>, y<span class='op'>=</span><span class='va'>prop</span>, fill <span class='op'>=</span> <span class='va'>PrimaryIssue</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Primary Constitutional Issue"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Proportion of Cases Presented to Supreme Court"</span>,</span>
-<span>    title <span class='op'>=</span> <span class='st'>"Cases Post-Carolene (1940s-2010s)"</span><span class='op'>)</span></span>
-<span></span>
-<span></span>
-<span><span class='va'>postViz</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>PreCarolene</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>PostCarolene</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

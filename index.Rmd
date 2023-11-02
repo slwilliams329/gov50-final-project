@@ -8,17 +8,21 @@ output:
 ---
 
 
-```{r setup, echo = FALSE}
+```{r, include = FALSE}
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
-
 library(readxl) 
 data <- read_excel("~/Desktop/judicial_review_of_congress_database_1789-2022 (2) (1).xlsx") 
+
+```
+
+```{r}
 data
 ```
 
-```{r setup, echo = FALSE}
+
+```{r,include = FALSE}
 
 preCaro <- data |>
   filter(DECADE <= 1930) |>
@@ -26,7 +30,7 @@ preCaro <- data |>
   summarize(n = n()) |>
   mutate(prop = (n/sum(n)))
 
-preViz <- preCaro |>
+PreCarolene <- preCaro |>
   mutate(
     PrimaryIssue = case_when(
       AREA1 == 1 ~ "Due Process",
@@ -42,12 +46,15 @@ preViz <- preCaro |>
     x = "Primary Constitutional Issue",
     y = "Proportion of Cases Presented to Supreme Court",
     title = "Cases Pre-Carolene (1760s-1930s)")
-
-preViz
          
 ```
 
-```{r setup, echo = FALSE}
+```{r}
+PreCarolene
+```
+
+
+```{r, include = FALSE}
 postCaro <- data |>
   filter(DECADE >= 1940) |>
   group_by(AREA1) |>
@@ -56,7 +63,7 @@ postCaro <- data |>
 
 Issues <- c("Due Process","Substantive Rights","Equality","Economic","Federalism","Separation of Powers")
 
-postViz <- postCaro |>
+PostCarolene <- postCaro |>
   mutate(
     PrimaryIssue = case_when(
       AREA1 == 1 ~ "Due Process",
@@ -72,7 +79,9 @@ postViz <- postCaro |>
     x = "Primary Constitutional Issue",
     y = "Proportion of Cases Presented to Supreme Court",
     title = "Cases Post-Carolene (1940s-2010s)")
+```
 
 
-postViz
+```{r}
+PostCarolene
 ```
