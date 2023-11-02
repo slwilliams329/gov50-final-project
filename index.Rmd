@@ -61,8 +61,6 @@ postCaro <- data |>
   summarize(n = n()) |>
   mutate(prop = (n/sum(n)))
 
-Issues <- c("Due Process","Substantive Rights","Equality","Economic","Federalism","Separation of Powers")
-
 PostCarolene <- postCaro |>
   mutate(
     PrimaryIssue = case_when(
