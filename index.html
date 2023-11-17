@@ -1545,61 +1545,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>preCaro</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>DECADE</span> <span class='op'>&lt;=</span> <span class='fl'>1930</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>AREA1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='op'>(</span><span class='va'>n</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> </span>
-<span></span>
-<span><span class='va'>PreCarolene</span> <span class='op'>&lt;-</span> <span class='va'>preCaro</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    PrimaryIssue <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Due Process"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"Substantive Rights"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>~</span> <span class='st'>"Equality"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>"Economic"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Federalism"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Separation of Powers"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>PrimaryIssue</span>, y<span class='op'>=</span><span class='va'>prop</span>, fill <span class='op'>=</span> <span class='va'>PrimaryIssue</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Primary Constitutional Issue"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Proportion of Cases Presented to Supreme Court"</span>,</span>
-<span>    title <span class='op'>=</span> <span class='st'>"Cases Pre-Carolene (1760s-1930s)"</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>PreCarolene</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>postCaro</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>DECADE</span> <span class='op'>&gt;=</span> <span class='fl'>1940</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>AREA1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='op'>(</span><span class='va'>n</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> </span>
-<span></span>
-<span><span class='va'>PostCarolene</span> <span class='op'>&lt;-</span> <span class='va'>postCaro</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
-<span>    PrimaryIssue <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Due Process"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"Substantive Rights"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>~</span> <span class='st'>"Equality"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>"Economic"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"Federalism"</span>,</span>
-<span>      <span class='va'>AREA1</span> <span class='op'>==</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Separation of Powers"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>PrimaryIssue</span>, y<span class='op'>=</span><span class='va'>prop</span>, fill <span class='op'>=</span> <span class='va'>PrimaryIssue</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/coord_flip.html'>coord_flip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
-<span>    x <span class='op'>=</span> <span class='st'>"Primary Constitutional Issue"</span>,</span>
-<span>    y <span class='op'>=</span> <span class='st'>"Proportion of Cases Presented to Supreme Court"</span>,</span>
-<span>    title <span class='op'>=</span> <span class='st'>"Cases Post-Carolene (1940s-2010s)"</span><span class='op'>)</span></span></code></pre>
-</div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1613,14 +1561,14 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>postCaro</span>, by <span class='op'>=</span> <span class='st'>"AREA1"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>PrimaryIssue <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Due Process"</span>,<span class='st'>"Substantive Rights"</span>,<span class='st'>"Equality"</span>,<span class='st'>"Economic"</span>,<span class='st'>"Federalism"</span>,<span class='st'>"Separation of Powers"</span><span class='op'>)</span><span class='op'>)</span> </span>
 <span></span>
-<span><span class='va'>caro</span> <span class='op'>&lt;-</span> <span class='va'>caro</span> <span class='op'>|&gt;</span></span>
+<span><span class='va'>caroTable</span> <span class='op'>&lt;-</span> <span class='va'>caro</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>ATE <span class='op'>=</span> <span class='va'>`prop.y`</span> <span class='op'>-</span> <span class='va'>`prop.x`</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>n.x</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span> <span class='op'>(</span><span class='op'>-</span><span class='va'>n.y</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>AREA1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/relocate.html'>relocate</a></span><span class='op'>(</span><span class='va'>PrimaryIssue</span>, .before <span class='op'>=</span> <span class='va'>prop.x</span><span class='op'>)</span> </span>
 <span></span>
-<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>caro</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Primary Issue"</span>, <span class='st'>"Proportion of Cases Presented, Pre-Carolene"</span>,<span class='st'>"Proportion of Cases Presented, Post-Carolene"</span>, <span class='st'>"Difference in Proportions"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>caroTable</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Primary Issue"</span>, <span class='st'>"Proportion of Cases Presented, Pre-Carolene"</span>,<span class='st'>"Proportion of Cases Presented, Post-Carolene"</span>, <span class='st'>"Difference in Proportions"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
 <colgroup>
@@ -1677,20 +1625,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tbody>
 </table>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
-<span><span class='va'>reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>ATE</span> <span class='op'>~</span> <span class='va'>PrimaryIssue</span>, data <span class='op'>=</span> <span class='va'>caro</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>reg</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>                     (Intercept)             PrimaryIssueEconomic 
-                      0.11894722                      -0.36770015 
-            PrimaryIssueEquality           PrimaryIssueFederalism 
-                     -0.07058013                      -0.21834091 
-PrimaryIssueSeparation of Powers   PrimaryIssueSubstantive Rights 
-                     -0.14437784                       0.08731570 </code></pre>
-</div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Analysis:</p>
+<p>To analyze my before-and-after treatment observational study, I found the difference in proportions of cases by Primary Issue heard by the Supreme Court before the treatment of the Carolene Products ruling and after. The largest average treatment effect, the difference in proportion, was in Primary Issue: Economic cases. Making up a proportion of 36% cases pre-Carolene and 11% post-Carolene, Economic cases saw the largest drop in proportion than any other issue area. The drop in 0.25 cases heard is in line with the logic of the ruling of US v. Carolene Products (1938) and its promise to no longer subject economic provisions to the heightened scrutiny designed to protect “discrete and insular minorities.” Rather than Primary Issue: Equality cases increasing in stride, like I predicted in Milestone #2, Primary Issue: Substantive Rights cases increased in proportion, jumping 21% to make up 23% of cases heard post-Carolene. Thus, in my final project, I will revisit the coding of the cases and their primary issues to determine whether or not, my identification of equality as protections for “discrete and insular minorities” was incorrect (by cross-referencing landmark cases widely held as the product of Carolene’s doctrinal change) or if my prediction for data trends was simply misguided.</p>
+<p>Although the before-and-after treatment observation study here can point us to early takeaways about the changing proportions of cases heard by the Supreme Court before and after Carolene Products, my research design does not meet all necessary assumptions and cannot, on its own, demonstrate casuality. Against the assumption required in the before-and-after treatment research design, there are a number of time-varying confounders in my study. The Supreme Court is constantly in flux: justices change, precedent evolves, and the judicial system responds to the changing political climate all the same as some issues become more or less salient. What if this change is not due to the treatment of doctrinal change, but a political shift in the United States to care more about issues implicating rights and liberties, especially of minority groups? As I am looking at such a wide span of centuries, it will be necessary in the text step to facet my data into smaller buckets, perhaps looking at cases by decade or by Chief Justice.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
