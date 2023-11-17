@@ -22,13 +22,13 @@ data
 ```
 
 
-```{r}
+```{r,include = FALSE}
 
 preCaro <- data |>
   filter(DECADE <= 1930) |>
   group_by(AREA1) |>
   summarize(n = n()) |>
-  mutate(prop = (n/sum(n)))
+  mutate(prop = (n/sum(n))) 
 
 PreCarolene <- preCaro |>
   mutate(
@@ -51,15 +51,16 @@ PreCarolene <- preCaro |>
 
 ```{r}
 PreCarolene
+
 ```
 
 
-```{r}
+```{r,include = FALSE}
 postCaro <- data |>
   filter(DECADE >= 1940) |>
   group_by(AREA1) |>
   summarize(n = n()) |>
-  mutate(prop = (n/sum(n)))
+  mutate(prop = (n/sum(n))) 
 
 PostCarolene <- postCaro |>
   mutate(
@@ -82,4 +83,27 @@ PostCarolene <- postCaro |>
 
 ```{r}
 PostCarolene
+
 ```
+```{r}
+caro <- preCaro |>
+  left_join(postCaro, by = "AREA1") |>
+  mutate(PrimaryIssue = c("Due Process","Substantive Rights","Equality","Economic","Federalism","Separation of Powers")) 
+
+caroTable <- caro |>
+  mutate(ATE = `prop.y` - `prop.x`) |>
+  select(-n.x) |>
+  select (-n.y) |>
+  select(-AREA1) |>
+  relocate(PrimaryIssue, .before = prop.x) 
+
+knitr::kable(carotable, col.names = c("Primary Issue", "Proportion of Cases Presented, Pre-Carolene","Proportion of Cases Presented, Post-Carolene", "Difference in Proportions"))
+
+```
+
+```{r}
+
+```
+
+
+
