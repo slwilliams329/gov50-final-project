@@ -101,9 +101,5 @@ knitr::kable(carotable, col.names = c("Primary Issue", "Proportion of Cases Pres
 
 ```
 
-```{r}
-
-```
-
 
 
