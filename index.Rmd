@@ -83,7 +83,6 @@ PostCarolene <- postCaro |>
 
 ```{r}
 PostCarolene
-
 ```
 ```{r}
 caro <- preCaro |>
@@ -97,9 +96,12 @@ caroTable <- caro |>
   select(-AREA1) |>
   relocate(PrimaryIssue, .before = prop.x) 
 
-knitr::kable(carotable, col.names = c("Primary Issue", "Proportion of Cases Presented, Pre-Carolene","Proportion of Cases Presented, Post-Carolene", "Difference in Proportions"))
+knitr::kable(caroTable, col.names = c("Primary Issue", "Proportion of Cases Presented, Pre-Carolene","Proportion of Cases Presented, Post-Carolene", "Difference in Proportions"))
 
 ```
 
+Analysis: 
 
+To analyze my before-and-after treatment observational study, I found the difference in proportions of cases by Primary Issue heard by the Supreme Court before the treatment of the Carolene Products ruling and after. The largest average treatment effect, the difference in proportion, was in Primary Issue: Economic cases. Making up a proportion of 36% cases pre-Carolene and 11% post-, Primary Issue: Economic cases saw the largest drop in proportion than any other issue area. The drop in 0.25 cases heard is in line with the logic of the ruling of US v. Carolene Products (1938) and its promise to no longer subject eocnomic provisions to the heightened scrutiny designed to protect "discrete and insular minorities." Rather than Primary Issue: Equality cases increasing in stride, like I predicted in Milestone #2, Primary Issue:Substantive Rights cases increased in proportion, jumping to 21% of cases heard post-Carolene. In my final project, I will revist the coding of the cases and their primary issues to determine whether or not, my identificaiton of equality as protections for "discrete and insular minorities" was incorrect (by cross-referencing landmark cases widely held as the product of Carolene's doctrinal change) or if my prediction for data trends was misguided. 
 
+Although the before-and-after treatment observation study here can point us to early takeaways aboout the changing proportions of cases heard by the Supreme Court before and after Carolene Products, my research design does not meet all necessary assumptions and cannot, on its own, demonstrate casuality. Against the assumption required in the before-and-after treatment research design, there are a number of time-varying confounders in my study.The Supreme Court is constantly in flux: justices change, precedent evolves, and the judicial system responds to the changing political climate all the same as some issues become more or less salient. As I am looking at such a wide span of centuries, it will be necessary in the text step to facet my data into smaller buckets, perhaps looking at cases by decade or by Chief Justice. 
