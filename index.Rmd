@@ -55,7 +55,6 @@ allChart
 ```
 
 
-
 My primary independent variable of interest is the Primary Issue Area. The following regression table displays the details for a regression equation involving only that variable. 
 
 ```{r}
