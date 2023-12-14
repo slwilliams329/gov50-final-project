@@ -1,14 +1,16 @@
 ---
 title: "Gov 50 Final Project"
 author: "Samantha Williams"
-description: "My final project"
+description: "Constitutional Scrutiny by Issue Area"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
 
+
 ```{r, include = FALSE}
+#Packaages & Libraries
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
@@ -17,20 +19,75 @@ library(readxl)
 ```
 
 ```{r}
+#Loading Data
 data <- read_excel("~/Desktop/judicial_review_of_congress_database_1789-2022 (2) (1).xlsx") 
 data
 ```
 
+Does the Supreme Court scrutinize the constitutionality of all legislative issue areas equally? In my study, I examined whether or not the Supreme Court is more likely to uphold the provisions of certain statutory issue areas as compared to others. I hypothesize that the Supreme Court is more likely to uphold the constitutionality of statutory provisions regarding economic rights than to uphold other provisions, such as those dealing with substantive rights. This matters because the legitimacy of the Supreme Court relies on its dedication to stability, predictability, and consistent judicial scrutiny as sourced from precedent. By understanding how and why the Supreme Court scrutinizes different statutes based on their issue area, we can better understand the legal framework which the Supreme Court established and operates within every day. 
 
-```{r,include = FALSE}
+For my data, I used Keith Whittington’s Judicial Review of Congress dataset found in the appendix of his book, Repugnant Laws: Judicial Review of Acts of Congress from the Founding to the Present (Lawrence: University Press of Kansas, 2019). The dataset consists of 1332 cases decided by the Supreme Court from its founding through the October 2017 term. This dataset is limited in scope; it only contains cases in which the justices explicitly considered constitutional challenges to federal authority and delivered a substantive ruling with constitutional deliberation. It does not contain every case of judicial review. To code this dataset, Whittington and his team conducted a keyword search on Lexis-Nexis to compile relevant cases to the six buckets of constitutional issue areas. This first sweep produced 10,000 cases that were individually reviewed, alongside secondary academic materials, to narrow the set down to 1308 that defined and enforced constitutional limits on the Congressional authority. During this review, the cases were expertly organized into six Primary Issue Are: due process (coded =1), substantive rights (=2), equality (=3), economic (=4), federalism (=5), and separation of powers (=6). 
 
-preCaro <- data |>
-  filter(DECADE <= 1930) |>
-  group_by(AREA1) |>
+This dataset contains many specific details about the case context for each case coded. For example, it considers whether or not the federal government was a party in the case, if the Attorney General argued on behalf of the federal government, and whether the statutory provision in question was considered a ‘landmark’ piece of legislation. For my research, the independent variable in this dataset is the Primary Issue Area. The dependent variable of interest is the decision. The decision is measured on a three-point index. Court rulings that uphold statutory provisions as valid against constitutional challenges are coded as 0. Court rulings that decide the statutory provision cannot be applied to the party, but do not rule on the potential future applicability of the statutory provisions are coded as 1. Court rulings that hold that the statutory provision is constitutional invalid are coded as 2. For simplicity, in my cleaning of the data, I excluded all cases in which the Court ruled that the statutory provsision was inapplicable (=1). I then recoded (My research design is a cross-sectional observation study, in which, the classification by Primary Issue is my treatment variable. 
+
+
+```{r}
+#Tidying the Data & Creating the Decision  Chart
+data <- data |>
+  filter(DECISION == 0 | DECISION == 2) |>
+  mutate(DECISION = if_else(DECISION == 2, 1,0))
+
+
+allGroup <- data |>
+  group_by(DECISION) |>
   summarize(n = n()) |>
   mutate(prop = (n/sum(n))) 
 
-PreCarolene <- preCaro |>
+allChart <- allGroup |>
+  ggplot(mapping = aes(x=factor(DECISION), y=prop, fill=DECISION)) +
+  geom_bar(stat ="identity") +
+  ylab("Proportion of Cases") +
+  xlab("Decision") + 
+  labs(title = "Proportion of Decisions Rendered by the Court") +
+  labs(fill = "Decision Index") 
+
+allChart
+```
+
+
+
+My primary independent variable of interest is the Primary Issue Area. The following regression table displays the details for a regression equation involving only that variable. 
+
+```{r}
+# Running a Linear Regression 
+
+dataReg <- lm(DECISION ~ AREA1, data)
+
+varnames1 <- c("(Intercept)" = "Intercept",
+               "AREA12" = "Substantive Rights Cases",
+               "AREA13" = "Equality Cases",
+               "AREA14" = "Economic Cases",
+               "AREA15" = "Federalism Cases",
+               "AREA16" = "Separation of Powers Cases")
+
+modelsummary::modelsummary(dataReg,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"),
+                           coef_map = varnames1)
+```
+
+
+As you can see in the table above, the Primary Issue variable is a categorical variable; thus, in the Intercept represents our omitted variable, cases about the Primary Issue area of Due Process. Due Process cases have a 12.6% likelihood of the case being held invalid. Within the Primary Issue Areas, the Substantive Rights Cases have 0.131 point increase in likelihood of the case being held invalid than Due Process Cases (=0.257). The Equality Cases land 0.142 points higher on the Decision Index than Due Processes Cases (=0.268) The Economic Cases land -0.044 point decrease in likelihood of the case being held invalid than Due Process Cases (0.082). The Federalism Cases land 0.026 point decrease in likelihood of the case being held invalid Due Process Cases (=0.1). The Separation of Powers Cases land 0.042 point increase in likelihood of the case being held invalid than Due Process Cases (=0.084).
+
+
+```{r}
+allGroup <- data |>
+  group_by(AREA1, DECISION) |>
+  summarize(n = n()) |>
+  mutate(prop = (n/sum(n))) 
+
+allChart <- allGroup |>
   mutate(
     PrimaryIssue = case_when(
       AREA1 == 1 ~ "Due Process",
@@ -39,71 +96,22 @@ PreCarolene <- preCaro |>
       AREA1 == 4 ~ "Economic",
       AREA1 == 5 ~ "Federalism",
       AREA1 == 6 ~ "Separation of Powers")) |>
-  ggplot(mapping = aes(x=PrimaryIssue, y=prop, fill = PrimaryIssue)) +
-  geom_col() +
-  coord_flip() +
-  labs(
-    x = "Primary Constitutional Issue",
-    y = "Proportion of Cases Presented to Supreme Court",
-    title = "Cases Pre-Carolene (1760s-1930s)")
-         
-```
+  ggplot(mapping = aes(x=factor(DECISION), y=prop, fill=DECISION)) +
+  geom_bar(stat = "identity") +
+  ylab("Proportion of Cases") +
+  xlab("Decision by Issue Areas") + 
+  labs(title = "Proportions of Decisions Rendered by the Court, by Issue Area") +
+  facet_wrap(~PrimaryIssue) +
+  labs(fill = "Decision Index") 
 
-```{r}
-PreCarolene
+allChart
 
 ```
 
+To summarize my results, I created a series of bar graphs displaying the relationship between the proportions of decisions rendered and the main variable of interest, the Primary Issue Area. I looked at each issue area separately, through faceting, and plotted the proportion of cases by each decision. As you can see above, for each area, it is most likely that statutory provisions will be upheld against constitutional challenges. Yet, there is a bit of variation in the proportion of cases in which statutory provisions are struck down, by issue area. In general, the Supreme Court appears to uphold statutory provision in about 75% of cases. In 80% of Supreme Court cases where there is a constitutional challenge against an economic statutory provision, the statute will be upheld. In cases regarding substantive rights, however, 75% of cases see the Court uphold the provision over the constitutional challenge. Interestingly, only about ~6% of economic cases see statutory provisions struck down, while provisions are struck down in 25% of substantive rights cases.
 
-```{r,include = FALSE}
-postCaro <- data |>
-  filter(DECADE >= 1940) |>
-  group_by(AREA1) |>
-  summarize(n = n()) |>
-  mutate(prop = (n/sum(n))) 
+To conclude, there does seem to be a relationship between Primary Issue Area and the likelihood that the Court will render the statutory provision invalid. There is stronger evidence of the relationship between Primary Issue Area and the likelihood that the Court will render the statutory provision invalid for Due Process and Substantive Due Process. Looking at the p-values, the Due Process cases and Substantive rights cases, both which have a positive relationship betweem their issue area and being held invalid, have p = <0.001, which is statistically significant with an alpha of 0.05.
 
-PostCarolene <- postCaro |>
-  mutate(
-    PrimaryIssue = case_when(
-      AREA1 == 1 ~ "Due Process",
-      AREA1 == 2 ~ "Substantive Rights",
-      AREA1 == 3 ~ "Equality",
-      AREA1 == 4 ~ "Economic",
-      AREA1 == 5 ~ "Federalism",
-      AREA1 == 6 ~ "Separation of Powers")) |>
-  ggplot(mapping = aes(x=PrimaryIssue, y=prop, fill = PrimaryIssue)) +
-  geom_col() +
-  coord_flip() +
-  labs(
-    x = "Primary Constitutional Issue",
-    y = "Proportion of Cases Presented to Supreme Court",
-    title = "Cases Post-Carolene (1940s-2010s)")
-```
+As this is a cross-sectional observational study, the relationships cannot be interpreted causally. The necessary assumption for causality in cross-sectional research design is that groups are identical on average. However, we cannot assume that cases across issue areas are identical on average. There are many possible confounders. For example, under the doctrine of Carolene Products, economic statutes have the presumption of constitutionality. Doctrinal restrictions on how the Court can rule change how the Court approaches decision-making across issue areas. Furthermore, challengers targeting substantive due process statutes may bring more conservative cases to the Court than those who challenge economic policies. The tilt of their arguments across the issue areas can affect how the will Court ultimately decides to rule. 
 
-
-```{r}
-PostCarolene
-```
-```{r}
-caro <- preCaro |>
-  left_join(postCaro, by = "AREA1") |>
-  mutate(PrimaryIssue = c("Due Process","Substantive Rights","Equality","Economic","Federalism","Separation of Powers")) 
-
-caroTable <- caro |>
-  mutate(ATE = `prop.y` - `prop.x`) |>
-  select(-n.x) |>
-  select (-n.y) |>
-  select(-AREA1) |>
-  relocate(PrimaryIssue, .before = prop.x) 
-
-knitr::kable(caroTable, col.names = c("Primary Issue", "Proportion of Cases Presented, Pre-Carolene","Proportion of Cases Presented, Post-Carolene", "Difference in Proportions"))
-
-```
-
-Analysis: 
-
-To analyze my before-and-after treatment observational study, I found the difference in proportions of cases by Primary Issue heard by the Supreme Court before the treatment of the Carolene Products ruling and after. The largest average treatment effect, the difference in proportion, was in Primary Issue: Economic cases. Making up a proportion of 36% cases pre-Carolene and 11% post-Carolene, Economic cases saw the largest drop in proportion than any other issue area. The drop in 0.25 cases heard is in line with the logic of the ruling of US v. Carolene Products (1938) and its promise to no longer subject economic provisions to the heightened scrutiny designed to protect "discrete and insular minorities." Rather than Primary Issue: Equality cases increasing in stride, like I predicted in Milestone #2, Primary Issue: Substantive Rights cases increased in proportion, jumping 21% to make up 23% of cases heard post-Carolene. Thus, in my final project, I will revisit the coding of the cases and their primary issues to determine whether or not, my identification of equality as protections for "discrete and insular minorities" was incorrect (by cross-referencing landmark cases widely held as the product of Carolene's doctrinal change) or if my prediction for data trends was simply misguided. 
-
-Although the before-and-after treatment observation study here can point us to early takeaways about the changing proportions of cases heard by the Supreme Court before and after Carolene Products, my research design does not meet all necessary assumptions and cannot, on its own, demonstrate casuality. Against the assumption required in the before-and-after treatment research design, there are a number of time-varying confounders in my study. The Supreme Court is constantly in flux: justices change, precedent evolves, and the judicial system responds to the changing political climate all the same as some issues become more or less salient. What if this change is not due to the treatment of doctrinal change, but a political shift in the United States to care more about issues implicating rights and liberties, especially of minority groups? As I am looking at such a wide span of centuries, it will be necessary in the text step to facet my data into smaller buckets, perhaps looking at cases by decade or by Chief Justice. 
-
-
+There are further limitations to this study. First, limitations to the dataset itself include the fact that Whittington narrowed down "relevant" Court cases for his own research's purpose. The dataset itself cannot fully reflect all of the Supreme Court's history and thus does not perfectly fit the requirements of my study. If I had more time and money to create my own dataset, I would include information on each case's adherence to liberal-conservative politics, in addition to the Congressional political tilt. Understanding what exactly was argued within each case is key in determining why and how the Court made its final decision. Furthermore, in addition to years and decades, I would include eras by Chief Justice of the Court to showcase the evolution of the Court's ruling philosophy. If I had more time I would run an additional regression include the independent categorical variable of Secondary Issues. In the dataset, Whittington includes data on whether each case has a secondary issue: a second constitutional issue area relevant to evaluation of the statutory provision's constitutionality. For example, Hodgson v. Bowerbank, which invalidated the portion of the Judiciary Act of 1789 conferring federal courts jurisdiction to try cases between aliens, dealt with both issues of federalism and separation of powers. Running a regression with two sets of independent categorical variables, however, is quite complicated and produces a near uninterpretable regression table for a current GOV50 student, such as myself. 
